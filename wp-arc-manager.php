@@ -11,7 +11,7 @@
  * Author URI:        https://jared-bloomer.github.io/KW4JLB-Documentation/
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       arc-manager
+ * Text Domain:       wp-arc-manager
  */
 
  /*
