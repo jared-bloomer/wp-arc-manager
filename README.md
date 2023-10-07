@@ -1,4 +1,4 @@
-# wp-arc-manager
+# Wordpress Amateur Radio Club Manager
 Wordpress Plugin for Managing an Amateur Radio Club. This wordpress plugin aims to provide the following
 
 * A Membership Roster
