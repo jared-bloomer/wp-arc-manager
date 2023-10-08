@@ -360,3 +360,9 @@ Public License instead of this License.
  // Check if Plugin is called from Wordpress or directly. If directly then die. 
  defined('ABSPATH') or die('You Do NOT Belong Here!');
 
+class WpARCManager 
+{
+  // add methods
+}
+
+$wpARCManager = new WpARCManager();
