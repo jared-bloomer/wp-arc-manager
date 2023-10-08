@@ -366,6 +366,13 @@ class WpARCManager
     add_action( 'init', array($this, 'custom_post_type'));
   }
 
+  function register() {
+    // enqueue scripts for backend admin
+    add_action('admin_enqueue_scripts', array($this, 'enqueue'));
+    // enqueue scripts for frontend
+    add_action('wp_enqueue_scripts', array($this, 'enqueue'));
+  }
+
   function activate() {
     $this->custom_post_type();
     flush_rewrite_rules();
@@ -379,10 +386,16 @@ class WpARCManager
     register_post_type( 'arcmanager', ['public' => true, 'label' => 'Club Manager']);
   }
 
+  function enqueue() {
+    wp_enqueue_style( 'arcmanagerstyle', plugins_url('assets/css/wp-arc-manager.css', __FILE__) );
+    wp_enqueue_script( 'arcmanagerjs', plugins_url('assets/js/wp-arc-manager.js', __FILE__) );
+  }
+
 }
 
 if ( class_exists('WpARCManager')) {
   $wpARCManager = new WpARCManager();
+  $wpARCManager->register();
 }
 
 // activation of plugin
