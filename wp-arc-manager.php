@@ -365,4 +365,6 @@ class WpARCManager
   // add methods
 }
 
-$wpARCManager = new WpARCManager();
+if ( class_exists('WpARCManager')) {
+  $wpARCManager = new WpARCManager();
+}
