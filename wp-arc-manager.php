@@ -362,11 +362,28 @@ Public License instead of this License.
 
 class WpARCManager 
 {
-  public function __construct() {
-    //Defining Method
+  function activate() {
+    // Comment
   }
+
+  function deactivate() {
+
+  }
+
+  function uninstall() {
+
+  }
+
 }
 
 if ( class_exists('WpARCManager')) {
   $wpARCManager = new WpARCManager();
 }
+
+// activation of plugin
+register_activation_hook( __FILE__, array($wpARCManager, 'activate') );
+
+// deactivate the plugin
+register_deactivation_hook( __FILE__, array($wpARCManager, 'deactivate') );
+
+// uninstall the plugin
