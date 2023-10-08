@@ -356,3 +356,7 @@ library.  If this is what you want to do, use the GNU Lesser General
 Public License instead of this License.
 
  */
+
+ // Check if Plugin is called from Wordpress or directly. If directly then die. 
+ defined('ABSPATH') or die('You Do NOT Belong Here!');
+
