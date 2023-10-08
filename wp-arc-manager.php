@@ -362,16 +362,21 @@ Public License instead of this License.
 
 class WpARCManager 
 {
+  function __construct() {
+    add_action( 'init', array($this, 'custom_post_type'));
+  }
+
   function activate() {
-    // Comment
+    $this->custom_post_type();
+    flush_rewrite_rules();
   }
 
   function deactivate() {
-
+    flush_rewrite_rules();
   }
 
-  function uninstall() {
-
+  function custom_post_type() {
+    register_post_type( 'arcmanager', ['public' => true, 'label' => 'Club Manager']);
   }
 
 }
@@ -385,5 +390,3 @@ register_activation_hook( __FILE__, array($wpARCManager, 'activate') );
 
 // deactivate the plugin
 register_deactivation_hook( __FILE__, array($wpARCManager, 'deactivate') );
-
-// uninstall the plugin
