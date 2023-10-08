@@ -360,46 +360,48 @@ Public License instead of this License.
  // Check if Plugin is called from Wordpress or directly. If directly then die. 
  defined('ABSPATH') or die('You Do NOT Belong Here!');
 
-class WpARCManager 
-{
-  function __construct() {
-    add_action( 'init', array($this, 'custom_post_type'));
+ if ( !class_exists('WpARCManager')) {
+  class WpARCManager 
+  {
+    function __construct() {
+      add_action( 'init', array($this, 'custom_post_type'));
+    }
+
+    public function activate() {
+      require_once plugin_dir_path( __FILE__ ) . '/inc/wp-arc-manager-activate.php';
+      WpARCManagerActivate::activate();
+    }
+
+    public function deactivate() {
+      require_once plugin_dir_path( __FILE__ ) . '/inc/wp-arc-manager-deactivate.php';
+      WpARCManagerDeactivate::deactivate();
+    }
+
+    public function register() {
+      // enqueue scripts for backend admin
+      add_action('admin_enqueue_scripts', array($this, 'enqueue'));
+      // enqueue scripts for frontend
+      add_action('wp_enqueue_scripts', array($this, 'enqueue'));
+    }
+
+    public function custom_post_type() {
+      register_post_type( 'arcmanager', ['public' => true, 'label' => 'Club Manager', 'menu_icon' => 'dashicons-vault']);
+    }
+
+    public function enqueue() {
+      wp_enqueue_style( 'arcmanagerstyle', plugins_url('assets/css/wp-arc-manager.css', __FILE__) );
+      wp_enqueue_script( 'arcmanagerjs', plugins_url('assets/js/wp-arc-manager.js', __FILE__) );
+    }
+
   }
 
-  function register() {
-    // enqueue scripts for backend admin
-    add_action('admin_enqueue_scripts', array($this, 'enqueue'));
-    // enqueue scripts for frontend
-    add_action('wp_enqueue_scripts', array($this, 'enqueue'));
-  }
 
-  function activate() {
-    $this->custom_post_type();
-    flush_rewrite_rules();
-  }
-
-  function deactivate() {
-    flush_rewrite_rules();
-  }
-
-  function custom_post_type() {
-    register_post_type( 'arcmanager', ['public' => true, 'label' => 'Club Manager']);
-  }
-
-  function enqueue() {
-    wp_enqueue_style( 'arcmanagerstyle', plugins_url('assets/css/wp-arc-manager.css', __FILE__) );
-    wp_enqueue_script( 'arcmanagerjs', plugins_url('assets/js/wp-arc-manager.js', __FILE__) );
-  }
-
-}
-
-if ( class_exists('WpARCManager')) {
   $wpARCManager = new WpARCManager();
   $wpARCManager->register();
+
+  // activation of plugin
+  register_activation_hook( __FILE__, array($wpARCManager, 'activate') );
+
+  // deactivate the plugin
+  register_deactivation_hook( __FILE__, array($wpARCManager, 'deactivate') );
 }
-
-// activation of plugin
-register_activation_hook( __FILE__, array($wpARCManager, 'activate') );
-
-// deactivate the plugin
-register_deactivation_hook( __FILE__, array($wpARCManager, 'deactivate') );
