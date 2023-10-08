@@ -362,7 +362,9 @@ Public License instead of this License.
 
 class WpARCManager 
 {
-  // add methods
+  public function __construct() {
+    //Defining Method
+  }
 }
 
 if ( class_exists('WpARCManager')) {
